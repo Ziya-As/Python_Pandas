@@ -148,6 +148,7 @@
     - [`between_time`](#between_time)
     - [`filter`](#filter)
     - [`diff`](#diff)
+    - [`transform`](#transform)
   - [Extension types (Accessors) in Pandas](#extension-types-accessors-in-pandas)
     - [`str`](#str)
     - [`dt`](#dt)
@@ -6467,6 +6468,10 @@ print(df.diff(periods=-1))
 4  NaN  NaN
 """
 ```
+
+<hr>
+
+### `transform`
 
 <hr>
 <hr>
