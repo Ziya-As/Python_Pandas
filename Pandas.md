@@ -6661,6 +6661,114 @@ Name: city, dtype: bool
 """
 ```
 
+The `split` method returns a series of lists:
+
+```py
+s = pd.Series(["a_b_c", "c_d_e", np.nan, "f_g_h"], dtype="string")
+
+print(s)
+"""
+0    a_b_c
+1    c_d_e
+2     <NA>
+3    f_g_h
+dtype: string
+"""
+
+print(s.str.split("_"))
+"""
+0    [a, b, c]
+1    [c, d, e]
+2         <NA>
+3    [f, g, h]
+dtype: object
+"""
+```
+
+Elements in the split lists can be accessed using the `get` method or `[]` notation:
+
+```py
+s = pd.Series(["a_b_c", "c_d_e", np.nan, "f_g_h"], dtype="string")
+
+print(s.str.split("_"))
+"""
+0    [a, b, c]
+1    [c, d, e]
+2         <NA>
+3    [f, g, h]
+dtype: object
+"""
+
+print(s.str.split("_").str.get(1))
+"""
+0       b
+1       d
+2    <NA>
+3       g
+dtype: object
+"""
+
+print(s.str.split("_").str[1])
+"""
+0       b
+1       d
+2    <NA>
+3       g
+dtype: object
+"""
+```
+
+We can use the `expand` option to return the output of `split` as a DataFrame:
+
+```py
+s = pd.Series(["a_b_c", "c_d_e", np.nan, "f_g_h"], dtype="string")
+
+print(s.str.split("_", expand=True))
+"""
+      0     1     2
+0     a     b     c
+1     c     d     e
+2  <NA>  <NA>  <NA>
+3     f     g     h
+"""
+```
+
+It is also possible to limit the number of splits using the `n` option:
+
+```py
+s = pd.Series(["a_b_c_A", "c_d_e_A", np.nan, "f_g_h_A", "i_j_k_A"], dtype="string")
+
+print(s)
+"""
+0    a_b_c_A
+1    c_d_e_A
+2       <NA>
+3    f_g_h_A
+4    i_j_k_A
+dtype: string
+"""
+
+print(s.str.split("_", n=1))
+"""
+0    [a, b_c_A]
+1    [c, d_e_A]
+2          <NA>
+3    [f, g_h_A]
+4    [i, j_k_A]
+dtype: object
+"""
+
+print(s.str.split("_", n=3))
+"""
+0    [a, b, c, A]
+1    [c, d, e, A]
+2            <NA>
+3    [f, g, h, A]
+4    [i, j, k, A]
+dtype: object
+"""
+```
+
 Regular expressions can be used with the `str` accessor as well.
 
 <hr>
