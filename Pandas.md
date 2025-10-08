@@ -81,6 +81,7 @@
       - [Using `loc` and `iloc`](#using-loc-and-iloc)
       - [Using the `replace` method](#using-the-replace-method)
     - [Modifying values in the specific column of a dataframe](#modifying-values-in-the-specific-column-of-a-dataframe)
+    - [Modifying values using `where`](#modifying-values-using-where)
     - [Dividing data into groups](#dividing-data-into-groups)
       - [Using the `cut` method](#using-the-cut-method)
       - [Using the `qcut` method](#using-the-qcut-method)
@@ -3129,6 +3130,40 @@ print(df.head())
 2  Gulnara  20.0
 3   Azamat  30.0
 4  Dilyara   NaN
+"""
+```
+
+### Modifying values using `where`
+
+The `where()` method in pandas is called on a series or a dataframe. It accepts a condition and a value after which it assigns the value to the series or the dataframe, when the condition is not met:
+
+```py
+import pandas as pd
+
+nestedDictionaryForDataFrame = {
+    'Istanbul': {2020: 15.46, 2021: 15.52, 2022: 15.60},
+    'Baku': {2020: 2.23, 2021: 2.25, 2022: 2.27},
+    'Tashkent': {2020: 2.50, 2021: 2.52, 2022: None},
+    'Karbala': {2020: 1.00, 2021: 1.02, 2022: 1.04}
+}
+
+df = pd.DataFrame(nestedDictionaryForDataFrame)
+print(df)
+"""
+      Istanbul  Baku  Tashkent  Karbala
+2020     15.46  2.23      2.50     1.00
+2021     15.52  2.25      2.52     1.02
+2022     15.60  2.27       NaN     1.04
+"""
+
+print(
+  df.where(df < 2.5, "small")
+)
+"""
+     Istanbul  Baku Tashkent  Karbala
+2020    small  2.23    small     1.00
+2021    small  2.25    small     1.02
+2022    small  2.27    small     1.04
 """
 ```
 
